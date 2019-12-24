@@ -1,0 +1,105 @@
+---------------------- Dockerfile -------------
+# Dockerfile References: https://docs.docker.com/engine/reference/builder/
+
+# Start from the latest golang base image
+FROM golang:latest
+
+RUN echo 'Making Docker Image for JWT Server'
+
+# Add Maintainer Info
+LABEL maintainer="Aseem Sethi <aseemsethi70@gmail.com>"
+
+# Set the Current Working Directory inside the container
+WORKDIR /go/src
+
+# Copy go mod and sum files
+ADD jwt /go/src/jwt
+ADD github.com /go/src/github.com
+
+# Set the Current Working Directory inside the container
+WORKDIR /go/src/jwt
+
+# Build the Go pp
+RUN go build
+
+# Expose port 8000 to the outside world
+EXPOSE 8000
+
+# Command to run the executable
+CMD ["./jwt"]
+
+---------------------------------------
+
+[asethi@localhost src]$ sudo docker build -t go-aseem .
+Sending build context to Docker daemon  16.13MB
+Step 1/10 : FROM golang:latest
+ ---> a1072a078890
+Step 2/10 : RUN echo 'Making Docker Image for JWT Server'
+ ---> Using cache
+ ---> 50298b4f54d4
+Step 3/10 : LABEL maintainer="Aseem Sethi <aseemsethi70@gmail.com>"
+ ---> Using cache
+ ---> f948f2ca712b
+Step 4/10 : WORKDIR /go/src
+ ---> Running in a3e2129d6df0
+Removing intermediate container a3e2129d6df0
+ ---> 09f88e07af99
+Step 5/10 : ADD jwt /go/src/jwt
+ ---> 0235975d00ae
+Step 6/10 : ADD github.com /go/src/github.com
+ ---> 82ef13461ea6
+Step 7/10 : WORKDIR /go/src/jwt
+ ---> Running in d52a237ecf99
+Removing intermediate container d52a237ecf99
+ ---> 4e0ba537a3b4
+Step 8/10 : RUN go build
+ ---> Running in befdab156caf
+Removing intermediate container befdab156caf
+ ---> cf7b4910e975
+Step 9/10 : EXPOSE 8000
+ ---> Running in 1f9a10958d11
+Removing intermediate container 1f9a10958d11
+ ---> 82d0100adecc
+Step 10/10 : CMD ["./jwt"]
+ ---> Running in 9802779d7a92
+Removing intermediate container 9802779d7a92
+ ---> 15e99fc359ab
+Successfully built 15e99fc359ab
+Successfully tagged go-aseem:latest
+
+------------------------------------------
+
+[asethi@localhost jwt]$ sudo docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
+go-aseem            latest              15e99fc359ab        About a minute ago   819MB
+
+------------------------------------------
+
+[asethi@localhost jwt]$ curl -v --header "Content-Type: application/json"   --request POST   --data '{"username":"user1","password":"password1"}' localhost:8000/signin
+* About to connect() to localhost port 8000 (#0)
+*   Trying ::1...
+* Connected to localhost (::1) port 8000 (#0)
+> POST /signin HTTP/1.1
+> User-Agent: curl/7.29.0
+> Host: localhost:8000
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 43
+> 
+* upload completely sent off: 43 out of 43 bytes
+< HTTP/1.1 200 OK
+< Set-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiZXhwIjoxNTc3MDgxMjQ0fQ.Ys2XnfFrO1zItlBwZWKpRYbIemdC4gQPrhPPFjqeFno; Expires=Mon, 23 Dec 2019 06:07:24 GMT
+< Date: Mon, 23 Dec 2019 06:02:24 GMT
+< Content-Length: 0
+< 
+* Connection #0 to host localhost left intact
+[asethi@localhost jwt]$ 
+
+-----------------------------------------
+
+[asethi@localhost jwt]$ sudo docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
+32efaf2cb8a2        go-aseem            "./jwt"             2 minutes ago       Up 2 minutes        0.0.0.0:8000->8000/tcp   goofy_kepler
+
+
+----------------------------------------

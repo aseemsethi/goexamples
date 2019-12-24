@@ -1,0 +1,19 @@
+[asethi@localhost jwt]$ curl -v --header "Content-Type: application/json"   --request POST   --data '{"username":"user1","password":"password1"}' localhost:8000/signin
+* About to connect() to localhost port 8000 (#0)
+*   Trying ::1...
+* Connected to localhost (::1) port 8000 (#0)
+> POST /signin HTTP/1.1
+> User-Agent: curl/7.29.0
+> Host: localhost:8000
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 43
+> 
+* upload completely sent off: 43 out of 43 bytes
+< HTTP/1.1 200 OK
+< Set-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiZXhwIjoxNTc3MDY3MjM2fQ.dAvk2-G5JO9msVmPoa65Kr4nswiQcYTiuWYGIyXEkEI; Expires=Mon, 23 Dec 2019 02:13:56 GMT
+< Date: Mon, 23 Dec 2019 02:08:56 GMT
+< Content-Length: 0
+< 
+* Connection #0 to host localhost left intact
+[asethi@localhost jwt]$ 
