@@ -101,5 +101,35 @@ go-aseem            latest              15e99fc359ab        About a minute ago  
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
 32efaf2cb8a2        go-aseem            "./jwt"             2 minutes ago       Up 2 minutes        0.0.0.0:8000->8000/tcp   goofy_kepler
 
+----------------------------------------
+
+To Save docker images to send to another machine, do the following:
+[asethi@localhost docker]$ sudo docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+go-aseem            latest              15e99fc359ab        2 days ago          819MB
+hello-world         latest              fce289e99eb9        11 months ago       1.84kB
+[asethi@localhost ~]$ cd go
+[asethi@localhost go]$ sudo docker save -o go-aseem.tar go-aseem
+[asethi@localhost go]$ ls -lrt
+total 820620
+drwxrwxr-x. 3 asethi asethi        25 Dec 21 08:07 pkg
+drwxrwxr-x. 5 asethi asethi       101 Dec 24 05:21 src
+-rw-------. 1 root   root   840311296 Dec 25 03:48 go-aseem.tar
+
+Now, we can copy the TAR file created above, and in the other machine, type the following to impirt the 
+docker image
+$ sudo docker load -i <path to copied image file>
 
 ----------------------------------------
+To save the Docker file in Docker hub, do the following:
+1. Log in on https://hub.docker.com/
+2. Click on Create Repository.
+
+Now, on the local machine
+$ docker login --username=asethi --email=youremail@company.com
+$ docker images
+$ docker tag 15e99fc359ab asethi/go-aseem:firsttry
+$ docker push asethi/go-aseem
+
+----------------------------------------
+
