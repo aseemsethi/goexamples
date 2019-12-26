@@ -17,3 +17,25 @@
 < 
 * Connection #0 to host localhost left intact
 [asethi@localhost jwt]$ 
+
+
+-------------------------
+
+[asethi@localhost jwt]$ curl -v --cookie "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiZXhwIjoxNTc3MzI3MjEzfQ.aiK0U4igyUCoqblvkXRoUILr7zJ6kSCGV-rjQQCKOE4" localhost:8000/welcome
+* About to connect() to localhost port 8000 (#0)
+*   Trying ::1...
+* Connected to localhost (::1) port 8000 (#0)
+> GET /welcome HTTP/1.1
+> User-Agent: curl/7.29.0
+> Host: localhost:8000
+> Accept: */*
+> Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiZXhwIjoxNTc3MzI3MjEzfQ.aiK0U4igyUCoqblvkXRoUILr7zJ6kSCGV-rjQQCKOE4
+> 
+< HTTP/1.1 200 OK
+< Date: Thu, 26 Dec 2019 02:23:25 GMT
+< Content-Length: 14
+< Content-Type: text/plain; charset=utf-8
+< 
+* Connection #0 to host localhost left intact
+Welcome user1![asethi@localhost jwt]$ 
+
