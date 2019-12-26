@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	dbInit();
 	http.HandleFunc("/signin", Signin)
 	http.HandleFunc("/welcome", Welcome)
 	//http.HandleFunc("/signin", Signin)
