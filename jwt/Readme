@@ -1,3 +1,16 @@
+Install “go” on Linux
+
+curl -O https://storage.googleapis.com/golang/go1.13.4.linux-amd64.tar.gz
+tar -xvf go1.13.4.linux-amd64.tar.gz 
+sudo chown -R root:root ./go
+sudo mv go /usr/local
+
+# Set PATH
+vi .profile
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+source .profile 
+
 ---------------------- Dockerfile -------------
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
