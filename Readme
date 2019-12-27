@@ -10,6 +10,17 @@ vi .profile
 export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 source .profile 
+---------------------- Go Notes --------------
+Stack for coroutine is 2K. Can grow, and a old stack is copied to new stack
+If a ptr to a lower stack mem is returned, it auto gets copied into heap
+Methods – are functions ( like notify() ) that have a receiver (like a struct user). Then once can call user.notify(). Create value semantic receiver with native data types. Same with user defined structs too. Only place where we realy need to use pointer semantics is when marshaling.
+Runtime.GOMAXPROCS(1), var wg sync.WaitGroup, wg.Add(1), wg.Done(), wg.Wait()
+Atomic functions – atomic.AddInt64(&counter, 1), atomic.Load/Store(&variable) – we can use channels instead of atomic variables
+
+Mutexes
+Unbuffered channel  (send/recvd block, till recv happens)– means no len parameter. Buffer channel means – at least a space of 1. timeAfter channel is a receive only channel for timeouts
+Context – save global variables key/value pair. Can also create a channel in the shared context – context.withCancel, context.withDeadline
+For scheduler tracing - $ GOMAXPROCS=1 GODEBUG=schedtrace=1000 ./example
 
 ---------------------- Dockerfile -------------
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
@@ -145,4 +156,24 @@ $ docker tag 15e99fc359ab asethi/go-aseem:firsttry
 $ docker push asethi/go-aseem
 
 ----------------------------------------
+
+Microservics
+
+Semantic Versioning – Major/Minor/Patch
+Martin Abbott and Michael Fisher’s - The Art of Scalability  - Scale Cube – X-instance, Y-Functional Decompose, Z-sharding
+Phillip Krutchen  - 4+1 Arch – Logical (classes), Implementation (jar), process(ipc), deployment(vm)
+OpenAPI – Swagger
+API Security – Dharma – Oauth2.0 and JWT Tokens
+Multiple info in single GET - GraphQL (http://graphql.org) and Netflix Falcor
+HTTP vs gRPC
+SAGA model – transactional, with rewind. Result of DB per service. High level process – like trip booking
+Discovery – Eureka (NetFlix) – Client Side
+Load Balancer – Kong API
+Docker Container, Unikernels
+MQTT, Kafka Bus
+CoAP – Constrained app protocol
+Linux Foundation – EdgeX foundry
+Service Mesh – Istio (Google) – N/W Infra for microservices - Traffic mgmt, security, telemetry, policy enforcement
+Terraform – Packer – Ansible
+Logging and Health Check
 
